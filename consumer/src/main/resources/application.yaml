@@ -1,0 +1,14 @@
+server:
+  port: 8081
+spring:
+  rabbitmq:
+    host: 192.168.110.110
+    username: admin
+    password: admin
+    port: 5672
+    listener:
+      simple:
+        # 签收模式为手动
+        acknowledge-mode: manual
+        #  每次拉去一条
+        prefetch: 1
