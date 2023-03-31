@@ -1,5 +1,7 @@
 package org.example.boot;
 
+import com.alibaba.fastjson2.JSON;
+import org.example.domain.UserDemo;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,14 +32,24 @@ public class SendController {
         rabbitTemplate.convertAndSend("springboot-pubsub", "", msg);
         return "发送成功";
     }
+
     @RequestMapping("/sendRoutingMsg")
-    public String sendRountingMsg(String msg,String key) {
+    public String sendRountingMsg(String msg, String key) {
         rabbitTemplate.convertAndSend("springboot-routing", key, msg);
         return "发送成功";
     }
+
     @RequestMapping("/sendTopicMsg")
-    public String sendTopicMsg(String msg,String key) {
+    public String sendTopicMsg(String msg, String key) {
         rabbitTemplate.convertAndSend("springboot-topic", key, msg);
+        return "发送成功";
+    }
+
+    @RequestMapping("/sendDemo")
+    public String sendDemoMsg(String msg) {
+
+        UserDemo userDemo = new UserDemo("zzg", "zzg");
+        rabbitTemplate.convertAndSend("demo", "", JSON.toJSONString(userDemo));
         return "发送成功";
     }
 
