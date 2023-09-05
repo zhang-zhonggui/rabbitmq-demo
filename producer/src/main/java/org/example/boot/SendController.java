@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
+
 /**
  * 发送消息
  *
@@ -18,6 +20,23 @@ public class SendController {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
+    /**
+     * 发送hello
+     * @param msg
+     * @return
+     */
+    @RequestMapping("/sendHello")
+    public String setHelloMsg(String msg) {
+        rabbitTemplate.convertAndSend("", "boot-hello", "zzzzzzz");
+        System.out.println(122312);
+        return "发送成功";
+    }
+    @RequestMapping("/sendDemo")
+    public String sendDemoMsg(String msg) {
+        UserDemo userDemo = new UserDemo("zzg", "zzg");
+        rabbitTemplate.convertAndSend("demo", "", JSON.toJSONString(userDemo));
+        return "发送成功";
+    }
 
     @RequestMapping("/sendMsg")
     public String sendMsg(String msg) {
@@ -44,14 +63,4 @@ public class SendController {
         rabbitTemplate.convertAndSend("springboot-topic", key, msg);
         return "发送成功";
     }
-
-    @RequestMapping("/sendDemo")
-    public String sendDemoMsg(String msg) {
-
-        UserDemo userDemo = new UserDemo("zzg", "zzg");
-        rabbitTemplate.convertAndSend("demo", "", JSON.toJSONString(userDemo));
-        return "发送成功";
-    }
-
-
 }

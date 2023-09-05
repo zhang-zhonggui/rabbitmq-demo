@@ -8,7 +8,6 @@
     <packaging>pom</packaging>
 
     <name>rabbitmq-demo</name>
-    <url>http://maven.apache.org</url>
     <modules>
         <module>producer</module>
         <module>consumer</module>

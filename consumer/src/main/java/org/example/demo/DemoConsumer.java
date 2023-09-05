@@ -19,7 +19,7 @@ public class DemoConsumer {
     @RabbitListener(bindings =
     @QueueBinding(
             value = @Queue(),
-            exchange = @Exchange(value = "demo", type = ExchangeTypes.DIRECT)
+            exchange = @Exchange(value = "demo")
     ))
     public void process(String msg) {
         UserDemo userDemo = JSON.to(UserDemo.class, msg);
