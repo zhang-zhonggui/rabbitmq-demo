@@ -1,6 +1,7 @@
 package org.example.boot;
 
-import com.alibaba.fastjson2.JSON;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.domain.UserDemo;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,10 @@ public class SendController {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
+    @Resource
+    private ObjectMapper objectMapper;
+
+
     /**
      * 发送hello
      * @param msg
@@ -34,7 +39,11 @@ public class SendController {
     @RequestMapping("/sendDemo")
     public String sendDemoMsg(String msg) {
         UserDemo userDemo = new UserDemo("zzg", "zzg");
-        rabbitTemplate.convertAndSend("demo", "", JSON.toJSONString(userDemo));
+        try {
+            rabbitTemplate.convertAndSend("demo", "", objectMapper.writeValueAsString(userDemo));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
         return "发送成功";
     }
 

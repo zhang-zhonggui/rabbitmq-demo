@@ -2,7 +2,14 @@ server:
   port: 8080
 spring:
   rabbitmq:
-    host: 192.168.2.38
-    username: admin
-    password: admin
-    port: 5672
+    host: seal.lmq.cloudamqp.com  # 主机地址
+    port: 5672                     # 使用 TLS 的端口
+    username: nhtrvjlh             # 用户名
+    password: o3AH5velShY8j7AfUX5b-b1G7Tf76Uh6  # 密码
+    virtual-host: nhtrvjlh        # 虚拟主机
+    listener:
+      simple:
+        # 签收模式为手动
+        acknowledge-mode: manual
+        #  每次拉去一条
+        prefetch: 1
